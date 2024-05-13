@@ -14,18 +14,33 @@ function App() {
   }, []);
 
   function createTodo() {
-    client.models.Todo.create({ content: window.prompt("Todo content") });
+    client.models.Todo.create({ content: window.prompt("Todo content(コンテント)") });
   }
+  
+  // Added 2024/05/13
+  function deleteTodo(id: string) {
+    const response = prompt("本当に良いですか(Y/N) ?");
+
+    if (response && (response.toLowerCase() === "y")) {
+      client.models.Todo.delete({ id });
+    }
+  }
+
 
   return (
     <main>
       <h1>My todos</h1>
       <button onClick={createTodo}>+ new</button>
+
       <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>{todo.content}</li>
-        ))}
+        {todos.map((todo) => 
+          <li
+            onClick={() => deleteTodo(todo.id)}
+            key={todo.id}>
+            {todo.content}
+          </li> )}
       </ul>
+
       <div>
         🥳 App successfully hosted. Try creating a new todo.
         <br />
