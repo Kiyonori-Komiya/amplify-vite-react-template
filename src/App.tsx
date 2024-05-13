@@ -19,9 +19,12 @@ function App() {
   
   // Added 2024/05/13
   function deleteTodo(id: string) {
-    const response = prompt("本当に良いですか(Y/N) ?");
+//    const response = prompt("本当に良いですか(Y/N) ?");
+    // 正規表現を使って全角半角のYyを判定
+    const regex = /^[yYｙＹ]$/;
 
-    if (response && (response.toLowerCase() === "y")) {
+//    if (response && (response.toLowerCase() === "y")) {
+    if (response && regex.test(response)) {
       client.models.Todo.delete({ id });
     }
   }
